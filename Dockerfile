@@ -17,11 +17,11 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 # We install VirtualBox
-RUN sudo apt-get install dkms
+RUN sudo apt-get install -y dkms
 RUN wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
 RUN sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian trusty contrib" >> /etc/apt/sources.list.d/virtualbox.list'
 RUN sudo apt-get update
-RUN sudo apt-get install virtualbox-4.3
+RUN sudo apt-get install -y virtualbox-4.3
 
 # We install the Extension Pack
 RUN cd /tmp

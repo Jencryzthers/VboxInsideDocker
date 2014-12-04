@@ -16,10 +16,14 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-
 # We install VirtualBox
-RUN sudo apt-get install linux-headers-generic virtualbox-dkms
-RUN sudo /etc/init.d/virtualbox status
+RUN sudo apt-get install dkms
+RUN wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+RUN sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian trusty contrib" >> /etc/apt/sources.list.d/virtualbox.list'
+RUN sudo apt-get update
+RUN sudo apt-get install virtualbox-4.3
+
+# We install the Extension Pack
 RUN cd /tmp
 RUN wget http://download.virtualbox.org/virtualbox/4.3.10/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
 RUN sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack

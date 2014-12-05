@@ -23,7 +23,7 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y virtualbox-4.3
 
 #fix kernel for 14.04
-RUN sudo apt-get install dkms build-essential linux-headers-generic
+RUN sudo apt-get install -y dkms build-essential linux-headers-generic
 RUN sudo /etc/init.d/vboxdrv setup
 
 # We recompile the kernel module and install it. 

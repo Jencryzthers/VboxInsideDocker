@@ -23,21 +23,8 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y virtualbox-4.3
 
 #fix kernel for 14.04
-#RUN sudo apt-get install -y build-essential linux-headers-`uname -r` dkms
-
-RUN cd /tmp
-
-RUN wget \
-
-kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-headers-3.14.25-031425_3.14.25-031425.201411211235_all.deb \
-
-kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-headers-3.14.25-031425-generic_3.14.25-031425.201411211235_i386.deb \
-
-kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-image-3.14.25-031425-generic_3.14.25-031425.201411211235_i386.deb
-
-RUN sudo dpkg -i linux-headers-3.14*.deb linux-image-3.14*.deb
-
-RUN sudo reboot
+RUN sudo apt-get install dkms build-essential linux-headers-generic
+RUN sudo /etc/init.d/vboxdrv setup
 
 # We recompile the kernel module and install it. 
 # RUN sudo /etc/init.d/vboxdrv setup
@@ -47,9 +34,7 @@ RUN cd /tmp
 RUN wget http://download.virtualbox.org/virtualbox/4.3.10/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
 RUN sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
 
-
 VOLUME /vbox
-RUN cd /vbox
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

@@ -16,17 +16,15 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-#fix kernel for 14.04
-RUN sudo apt-get install -y linux-headers-generic build-essential dkms
-#RUN sudo apt-get remove --purge virtualbox-dkms
-#RUN sudo apt-get install -y virtualbox-dkms
 
 # We install VirtualBox
-RUN sudo apt-get install -y dkms
 RUN wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
 RUN sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian trusty contrib" >> /etc/apt/sources.list.d/virtualbox.list'
 RUN sudo apt-get update
 RUN sudo apt-get install -y virtualbox-4.3
+
+#fix kernel for 14.04
+RUN sudo apt-get install -y build-essential linux-headers-`uname -r` dkms
 
 # We recompile the kernel module and install it. 
 RUN sudo /etc/init.d/vboxdrv setup
@@ -35,6 +33,10 @@ RUN sudo /etc/init.d/vboxdrv setup
 RUN cd /tmp
 RUN wget http://download.virtualbox.org/virtualbox/4.3.10/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
 RUN sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
+
+
+VOLUME /vbox
+RUN cd /vbox
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

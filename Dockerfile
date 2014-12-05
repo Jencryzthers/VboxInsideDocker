@@ -18,8 +18,8 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 #fix kernel for 14.04
 RUN sudo apt-get install -y linux-headers-generic build-essential dkms
-RUN sudo apt-get remove --purge virtualbox-dkms
-RUN sudo apt-get install -y virtualbox-dkms
+#RUN sudo apt-get remove --purge virtualbox-dkms
+#RUN sudo apt-get install -y virtualbox-dkms
 
 # We install VirtualBox
 RUN sudo apt-get install -y dkms

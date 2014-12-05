@@ -22,23 +22,15 @@ RUN sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian trust
 RUN sudo apt-get update
 RUN sudo apt-get install -y virtualbox-4.3
 
-#fix kernel for 14.04
-#RUN sudo apt-get install -y dkms build-essential linux-headers-generic
-
-
+#Downloading Kernel to 3.14.25
 RUN cd /tmp
-
 RUN wget \
-
 kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-headers-3.14.25-031425_3.14.25-031425.201411211235_all.deb \
-
 kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-headers-3.14.25-031425-generic_3.14.25-031425.201411211235_amd64.deb \
-
 kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-image-3.14.25-031425-generic_3.14.25-031425.201411211235_amd64.deb
 
+#Installing Kernel to 3.14.25
 RUN sudo dpkg -i linux-headers-3.14*.deb linux-image-3.14*.deb
-
-RUN sudo reboot
 
 RUN sudo /etc/init.d/vboxdrv setup
 

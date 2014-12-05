@@ -23,6 +23,9 @@ RUN sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian trust
 RUN sudo apt-get update
 RUN sudo apt-get install -y virtualbox-4.3
 
+# We recompile the kernel module and install it. 
+RUN sudo /etc/init.d/vboxdrv setup
+
 # We install the Extension Pack
 RUN cd /tmp
 RUN wget http://download.virtualbox.org/virtualbox/4.3.10/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack

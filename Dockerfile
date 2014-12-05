@@ -16,6 +16,11 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
+#fix kernel for 14.04
+RUN sudo apt-get install -y linux-headers-generic build-essential dkms
+RUN sudo apt-get remove --purge virtualbox-dkms
+RUN sudo apt-get install -y virtualbox-dkms
+
 # We install VirtualBox
 RUN sudo apt-get install -y dkms
 RUN wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -

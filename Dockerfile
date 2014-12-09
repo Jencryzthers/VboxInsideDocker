@@ -1,4 +1,4 @@
-# VirtualBox 4.3.10
+# VirtualBox 4.3.x
 #
 # VERSION               0.0.1
 
@@ -38,9 +38,10 @@ RUN sudo /etc/init.d/vboxdrv setup
 # RUN sudo /etc/init.d/vboxdrv setup
 
 # We install the Extension Pack
-RUN cd /tmp
-RUN wget http://download.virtualbox.org/virtualbox/4.3.10/Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
-RUN sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.3.10-93012.vbox-extpack
+RUN VBOX_VERSION=`dpkg -s virtualbox-4.3 | grep '^Version: ' | sed -e 's/Version: \([0-9\.]*\)\-.*/\1/'` ; \
+    wget http://download.virtualbox.org/virtualbox/${VBOX_VERSION}/Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack ; \
+    sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack ; \
+    rm Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
 
 VOLUME /vbox
 

@@ -22,21 +22,6 @@ RUN sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian trust
 RUN sudo apt-get update
 RUN sudo apt-get install -y virtualbox-4.3
 
-#Downloading Kernel to 3.14.25
-RUN cd /tmp
-RUN wget \
-kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-headers-3.14.25-031425_3.14.25-031425.201411211235_all.deb \
-kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-headers-3.14.25-031425-generic_3.14.25-031425.201411211235_amd64.deb \
-kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.25-utopic/linux-image-3.14.25-031425-generic_3.14.25-031425.201411211235_amd64.deb
-
-#Installing Kernel to 3.14.25
-RUN sudo dpkg -i linux-headers-3.14*.deb linux-image-3.14*.deb
-
-RUN sudo /etc/init.d/vboxdrv setup
-
-# We recompile the kernel module and install it. 
-# RUN sudo /etc/init.d/vboxdrv setup
-
 # We install the Extension Pack
 RUN VBOX_VERSION=`dpkg -s virtualbox-4.3 | grep '^Version: ' | sed -e 's/Version: \([0-9\.]*\)\-.*/\1/'` ; \
     wget http://download.virtualbox.org/virtualbox/${VBOX_VERSION}/Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack ; \
@@ -44,6 +29,9 @@ RUN VBOX_VERSION=`dpkg -s virtualbox-4.3 | grep '^Version: ' | sed -e 's/Version
     rm Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
 
 VOLUME /vbox
+
+# The virtualbox driver device must be mounted from host
+VOLUME /dev/vboxdrv
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

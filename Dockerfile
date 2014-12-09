@@ -21,3 +21,5 @@ RUN VBOX_VERSION=`dpkg -s virtualbox-4.3 | grep '^Version: ' | sed -e 's/Version
 
 # The virtualbox driver device must be mounted from host
 VOLUME /dev/vboxdrv
+
+RUN sudo apt-get install -yq vagrant

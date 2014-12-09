@@ -19,7 +19,5 @@ RUN VBOX_VERSION=`dpkg -s virtualbox-4.3 | grep '^Version: ' | sed -e 's/Version
     sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack ; \
     rm Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
 
-VOLUME /vbox
-
 # The virtualbox driver device must be mounted from host
 VOLUME /dev/vboxdrv

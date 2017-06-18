@@ -12,5 +12,5 @@ host, and mount /dev/vboxdrv to the container.
 Example:
 
 ```
-docker run -v /dev/vboxdrv:/dev/vboxdrv --name=vbox vboxinsidedocker
+docker run -v /dev/vboxdrv:/dev/vboxdrv --name=vbox jencryzthers/vboxinsidedocker
 ```

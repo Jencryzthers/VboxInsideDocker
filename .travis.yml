@@ -1,0 +1,9 @@
+language: sh
+script:
+- sudo docker build -t vboxinsidedocker .
+- sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian zesty contrib" >> /etc/apt/sources.list.d/virtualbox.list'
+- wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+- sudo apt-get update
+- sudo apt-get install --yes linux-headers-generic
+- sudo apt-get install --yes -f virtualbox-5.2
+- sudo docker run -v /dev/vboxdrv:/dev/vboxdrv -i -t vboxinsidedocker /bin/bash -c 'VBoxManage --version && vagrant init hashicorp/xenial64 && vagrant up'
